@@ -9,9 +9,16 @@ Usage
 
 ```php
 
-$data['year'] = \Calendar::year(2013);
+Package::load('calendar');
 
-echo View::forge('test/calendar', $data, false);
+$years = array();
+
+foreach (range(2013, 2020) as $year)
+{
+	$years[] = \Calendar::year($year);
+}
+
+echo View::forge('test/cal', array('years' => $years), false);
 
 ```
 
