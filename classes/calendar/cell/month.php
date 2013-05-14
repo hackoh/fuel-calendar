@@ -13,20 +13,35 @@
 
 namespace Calendar;
 
+/**
+ * 
+ */
 class Calendar_Cell_Month extends \Calendar_Cell implements \Iterator
 {
+	/**
+	 * [$_offset description]
+	 * @var integer
+	 */
 	protected $_offset = 0;
 
-	public static function forge($month = null, $year = null, $calendar_name = 'default')
+	/**
+	 * [forge description]
+	 * @param  [type] $month [description]
+	 * @param  [type] $year  [description]
+	 * @return [type]        [description]
+	 */
+	public static function forge($month = null, $year = null)
 	{
-		return new static($month, $year, $calendar_name);
+		return new static($month, $year);
 	}
 
-	public function __construct($month = null, $year = null, $calendar_name = 'default')
+	/**
+	 * [__construct description]
+	 * @param [type] $month [description]
+	 * @param [type] $year  [description]
+	 */
+	public function __construct($month = null, $year = null)
 	{
-
-		$this->_calendar_name = $calendar_name;
-
 		is_null($month) and $month = (int) date('n');
 		is_null($year) and $year = (int) date('Y');
 		
@@ -35,12 +50,14 @@ class Calendar_Cell_Month extends \Calendar_Cell implements \Iterator
 		$this->_params = array(
 			'year'	=> $year,
 			'month'	=> $month,
-			'week'	=> 1,
-			'day'	=> 1,
 			'time'	=> $time,
 		);
 	}
 
+	/**
+	 * [get_weeks description]
+	 * @return [type] [description]
+	 */
 	public function get_weeks()
 	{
 		$weeks = array();
@@ -58,33 +75,58 @@ class Calendar_Cell_Month extends \Calendar_Cell implements \Iterator
 		return $weeks;
 	}
 
-	public function get_day($day)
+	/**
+	 * [get_day description]
+	 * @param  [type] $day [description]
+	 * @return [type]      [description]
+	 */
+	public function get_day($day = null)
 	{
 		return $this->get_calendar()->get_day($day, $this->month, $this->year);	
 	}
 
+	/**
+	 * [current description]
+	 * @return [type] [description]
+	 */
 	public function current()
 	{
-		return $this->get_calendar()->get_day($this->day + $this->_offset, $this->month, $this->year);
+		return $this->get_calendar()->get_day(1 + $this->_offset, $this->month, $this->year);
 	}
 
+	/**
+	 * [key description]
+	 * @return [type] [description]
+	 */
 	public function key()
 	{
 		return $this->_offset;
 	}
 
+	/**
+	 * [next description]
+	 * @return function [description]
+	 */
 	public function next()
 	{
 		$this->_offset++;
 	}
 
+	/**
+	 * [rewind description]
+	 * @return [type] [description]
+	 */
 	public function rewind()
 	{
 		$this->_offset = 0;
 	}
 
+	/**
+	 * [valid description]
+	 * @return [type] [description]
+	 */
 	public function valid()
 	{
-		return ($this->day + $this->_offset) <= cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
+		return (1 + $this->_offset) <= cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
 	}
 }

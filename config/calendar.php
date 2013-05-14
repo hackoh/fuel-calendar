@@ -13,10 +13,12 @@
 
 return array(
 	'holidays' => array(
+		/*
 		2013 => array(
 			5 => array(
-				9 => '誕生日',
+				9 => 'My birthday!'
 			)
 		)
+		*/
 	),
 );

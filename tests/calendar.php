@@ -25,7 +25,81 @@ class Test_Calendar extends TestCase
 		Package::load('calendar');
 	}
 
+	public function test_forge()
+	{
+		try
+		{
+			$calendar = \Calendar::forge('test');
+		}
+		catch (\DomainException $e)
+		{}
+
+		$expected = true;
+
+		$this->assertEquals($expected, $calendar instanceof \Calendar);
+	}
+
+	public function test_forge_recreated()
+	{
+		$is_error = false;
+		try
+		{
+			$calendar = \Calendar::forge('default');
+		}
+		catch (\DomainException $e)
+		{
+			$is_error = true;
+		}
+
+		$expected = true;
+
+		$this->assertEquals($expected, $is_error);
+	}
+
+	public function test_day_data_handling()
+	{
+		$day = \Calendar::day(-1, 0, 2013);
+
+		$expected = '2012/11/29';
+
+		$this->assertEquals($expected, $day->format('Y/m/d'));
+
+		$day->set_data('This is test data');
+
+		$day = \Calendar::day(29, 11, 2012);
+
+		$expected = 'This is test data';
+
+		$this->assertEquals($expected, $day->get_data());
+	}
+
+	public function test_week_data_handling()
+	{
+		$week = \Calendar::week(1, 0, 2013);
+
+		$expected = '2012/11';
+
+		$this->assertEquals($expected, $week->format('Y/m'));
+
+		$week->set_data('This is test data');
+
+		$week = \Calendar::week(5, 11, 2012);
+
+		$expected = 'This is test data';
+
+		$this->assertEquals($expected, $week->get_data());
+	}
+
 	public function test_instance()
+	{
+		$calendar = \Calendar::instance('default');
+
+		$expected = true;
+
+		$this->assertEquals($expected, $calendar instanceof \Calendar);
+	}
+
+	public function test_instance_default()
 	{
 		$calendar = \Calendar::instance();
 
@@ -34,100 +108,122 @@ class Test_Calendar extends TestCase
 		$this->assertEquals($expected, $calendar->get_name());
 	}
 
-	public function test_year()
+	public function test_instance_false()
 	{
-		$expected = 2013;
+		$is_error = false;
+		try
+		{
+			$calendar = \Calendar::instance('foo');
+		}
+		catch (\OutOfBoundsException $e)
+		{
+			$is_error = true;
+		}
 
-		$this->assertEquals($expected, \Calendar::year(2013)->year);
+		$expected = true;
+
+		$this->assertEquals($expected, $is_error);
 	}
 
-	public function test_year_months()
+	public function test_get_year()
 	{
+		$calendar = \Calendar::forge('test_get_year');
 
-		$expected = 12;
+		$expected = 2013;
 
-		$this->assertEquals($expected, count(\Calendar::year(2013)->get_months()));
+		$this->assertEquals(true, $calendar->get_year(2013) instanceof \Calendar_Cell_Year);
+		$this->assertEquals($expected, $calendar->get_year(2013)->year);
+
+		$expected = (int) date('Y');
+
+		$this->assertEquals(true, $calendar->get_year() instanceof \Calendar_Cell_Year);
+		$this->assertEquals($expected, $calendar->get_year()->year);
+	}
+
+	public function test_year()
+	{
+		$calendar = \Calendar::forge('test_year');
+
+		$this->assertEquals(true, $calendar->get_year() === \Calendar::year(null, 'test_year'));
+
+		$this->assertEquals(false, $calendar->get_year() === \Calendar::year());
+	}
+
+	public function test_get_month()
+	{
+		$calendar = \Calendar::forge('test_get_month');
+
+		$expected = '2013/05';
+
+		$this->assertEquals(true, $calendar->get_month(5, 2013) instanceof \Calendar_Cell_Month);
+		$this->assertEquals($expected, $calendar->get_month(5, 2013)->format('Y/m'));
+
+		$expected = date('Y/m');
+
+		$this->assertEquals(true, $calendar->get_month() instanceof \Calendar_Cell_Month);
+		$this->assertEquals($expected, $calendar->get_month()->format('Y/m'));
 	}
 
 	public function test_month()
 	{
-		$month = \Calendar::month(5, 2013);
+		$calendar = \Calendar::forge('test_month');
 
-		$expected = 5;
+		$this->assertEquals(true, $calendar->get_month() === \Calendar::month(null, null, 'test_month'));
 
-		$this->assertEquals($expected, $month->month);
+		$this->assertEquals(false, $calendar->get_month() === \Calendar::month());
 	}
 
-	public function test_month_data()
+	public function test_get_week()
 	{
-		$month = \Calendar::month(5, 2013);
+		$calendar = \Calendar::forge('test_get_week');
 
-		$expected = 5;
+		$expected = '2013/04/28';
 
-		$month->set_data('foo');
-
-		$month = \Calendar::month(5, 2013);
-
-		$this->assertEquals('foo', $month->get_data());
+		$this->assertEquals(true, $calendar->get_week(1, 5, 2013) instanceof \Calendar_Cell_Week);
+		$this->assertEquals($expected, $calendar->get_week(1, 5, 2013)->format('Y/m/d'));
 	}
 
-	public function test_month_weeks()
+	public function test_week()
 	{
-		$weeks = \Calendar::month(5, 2013)->get_weeks();
+		$calendar = \Calendar::forge('test_week');
 
-		$expected = 5;
+		$this->assertEquals(true, $calendar->get_week() === \Calendar::week(null, null, null, 'test_week'));
 
-		$this->assertEquals($expected, count($weeks));
+		$this->assertEquals(false, $calendar->get_week() === \Calendar::week());
 	}
 
-	public function test_month_day()
+	public function test_get_day()
 	{
-		$day = \Calendar::month(5, 2013)->get_day(9);
+		$calendar = \Calendar::forge('test_get_day');
 
-		$expected = 9;
+		$expected = '2013/05/09';
 
-		$this->assertEquals($expected, $day->day);
-
-		$expected = '誕生日';
-
-		$this->assertEquals($expected, $day->holiday);
-
-		$expected = true;
-
-		$this->assertEquals($expected, $day->is_holiday());
+		$this->assertEquals(true, $calendar->get_day(9, 5, 2013) instanceof \Calendar_Cell_Day);
+		$this->assertEquals($expected, $calendar->get_day(9, 5, 2013)->format('Y/m/d'));
 	}
 
-	public function test_render_calendar()
+	public function test_day()
 	{
-		$month = \Calendar::month(5, 2013);
+		$calendar = \Calendar::forge('test_day');
 
-		$expected = array(
-			array('0428', '0429', '0430', '0501', '0502', '0503', '0504'),
-			array('0505', '0506', '0507', '0508', '0509', '0510', '0511'),
-			array('0512', '0513', '0514', '0515', '0516', '0517', '0518'),
-			array('0519', '0520', '0521', '0522', '0523', '0524', '0525'),
-			array('0526', '0527', '0528', '0529', '0530', '0531', '0601'),
-		);
+		$this->assertEquals(true, $calendar->get_day() === \Calendar::day(null, null, null, 'test_day'));
 
-		foreach ($month->get_weeks() as $week_offset => $week)
-		{
-			foreach ($week as $day_offset => $day)
-			{
-				$this->assertEquals($expected[$week_offset][$day_offset], $day->format('md'));
-			}
-		}
+		$this->assertEquals(false, $calendar->get_day() === \Calendar::day());
 	}
 
-	public function test_holidays()
+	public function test_get_holidays()
 	{
+		$calendar = \Calendar::forge('test_get_holidays');
 
-		$holidays = \Calendar::holidays();
+		$calendar->set_config('holidays.2013.5.9', 'My birthday!');
 
-		$expected = '誕生日';
+		$holidays = $calendar->get_holidays();
+
+		$expected = 'My birthday!';
 
 		$this->assertEquals($expected, \Arr::get($holidays, '2013.5.9'));
 
-		$holidays = \Calendar::holidays('/');
+		$holidays = $calendar->get_holidays('/');
 
 		$expected = '2013/5/9';
 
@@ -152,12 +248,6 @@ class Test_Calendar extends TestCase
 		$holidays = \Calendar::holidays(false, 'foo');
 
 		$expected = 'Foo';
-
-		$this->assertEquals($expected, \Arr::get($holidays, '2013.5.9'));
-
-		$holidays = \Calendar::holidays();
-
-		$expected = '誕生日';
 
 		$this->assertEquals($expected, \Arr::get($holidays, '2013.5.9'));
 

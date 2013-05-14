@@ -13,22 +13,35 @@
 
 namespace Calendar;
 
+/**
+ * 
+ */
 class Calendar_Cell_Day extends \Calendar_Cell
 {
-
-	public static function forge($day = null, $month = null, $year = null, $calender_name = 'default')
+	/**
+	 * [forge description]
+	 * @param  [type] $day   [description]
+	 * @param  [type] $month [description]
+	 * @param  [type] $year  [description]
+	 * @return [type]        [description]
+	 */
+	public static function forge($day = null, $month = null, $year = null)
 	{
-		return new static($day, $month, $year, $calender_name);
+		return new static($day, $month, $year);
 	}
 
-	public function __construct($day = null, $month = null, $year = null, $calender_name = 'default')
+	/**
+	 * [__construct description]
+	 * @param [type] $day   [description]
+	 * @param [type] $month [description]
+	 * @param [type] $year  [description]
+	 */
+	public function __construct($day = null, $month = null, $year = null)
 	{
-
-		$this->_calender_name = $calender_name;
-
 		is_null($day) and $day = (int) date('j');
 		is_null($month) and $month = (int) date('n');
 		is_null($year) and $year = (int) date('Y');
+		
 		$week = (int) date('W', mktime(0, 0, 0, $month, $day, $year)) - (int) date('W', mktime(0, 0, 0, $month, 1, $year)) + 1;
 
 		$time = mktime(0, 0, 0, $month, $day, $year);
@@ -43,6 +56,11 @@ class Calendar_Cell_Day extends \Calendar_Cell
 		);
 	}
 
+	/**
+	 * [is_holiday description]
+	 * @param  boolean $saturday_flag [description]
+	 * @return boolean                [description]
+	 */
 	public function is_holiday($saturday_flag = true)
 	{
 		$wday = date('w', $this->time);
