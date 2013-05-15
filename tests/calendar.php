@@ -41,10 +41,12 @@ class Test_Calendar extends TestCase
 
 	public function test_forge_recreated()
 	{
+		\Calendar::forge('test_forge_recreated');
+		
 		$is_error = false;
 		try
 		{
-			$calendar = \Calendar::forge('default');
+			$calendar = \Calendar::forge('test_forge_recreated');
 		}
 		catch (\DomainException $e)
 		{

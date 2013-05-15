@@ -36,9 +36,6 @@ class Calendar
 	{
 		// load the config.
 		\Config::load('calendar', true);
-
-		// the "default" instance will be created at initialization. 
-		static::forge('default');
 	}
 
 	/**
@@ -68,7 +65,14 @@ class Calendar
 	{
 		if ( ! isset(static::$_instances[$name]))
 		{
-			throw new \OutOfBoundsException('Calendar instance named "'.$name.'" does not exists. Use forge() instead of instance() first.');
+			if ($name === 'default')
+			{
+				static::$_instances[$name] = static::forge($name);
+			}
+			else
+			{
+				throw new \OutOfBoundsException('Calendar instance named "'.$name.'" does not exists. Use forge() instead of instance() first.');
+			}
 		}
 		return static::$_instances[$name];
 	}
