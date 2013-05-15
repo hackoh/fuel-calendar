@@ -229,7 +229,7 @@ class Calendar
 	}
 
 	/**
-	 * Get the config
+	 * Return the config
 	 * 
 	 * @param  string $key dot-notated key
 	 * @return mixed

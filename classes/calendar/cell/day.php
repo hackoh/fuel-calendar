@@ -14,16 +14,20 @@
 namespace Calendar;
 
 /**
- * 
+ * The Calendar_Cell_Day class is one of concrete class of Calendar_Cell.
+ * This object has six read-only params. "year", "month", "week", "day", "time" and "holiday".
+ * This class does not implement Iterator interface.
+ * Because this class is smallest of Calendar_Cell.
  */
-class Calendar_Cell_Day extends \Calendar_Cell
+class Calendar_Cell_Day extends Calendar_Cell
 {
 	/**
-	 * [forge description]
-	 * @param  [type] $day   [description]
-	 * @param  [type] $month [description]
-	 * @param  [type] $year  [description]
-	 * @return [type]        [description]
+	 * Create Calendar_Cell_Day object.
+	 * 
+	 * @param  int $day 
+	 * @param  int $month
+	 * @param  int $year
+	 * @return Calendar_Cell_Week
 	 */
 	public static function forge($day = null, $month = null, $year = null)
 	{
@@ -31,10 +35,11 @@ class Calendar_Cell_Day extends \Calendar_Cell
 	}
 
 	/**
-	 * [__construct description]
-	 * @param [type] $day   [description]
-	 * @param [type] $month [description]
-	 * @param [type] $year  [description]
+	 * Object constructor
+	 * 
+	 * @param  int $day 
+	 * @param  int $month
+	 * @param  int $year
 	 */
 	public function __construct($day = null, $month = null, $year = null)
 	{
@@ -44,6 +49,7 @@ class Calendar_Cell_Day extends \Calendar_Cell
 		
 		$week = (int) date('W', mktime(0, 0, 0, $month, $day, $year)) - (int) date('W', mktime(0, 0, 0, $month, 1, $year)) + 1;
 
+		// The "time" is {YEAR}/{MONTH}/{DAY} 00:00:00.
 		$time = mktime(0, 0, 0, $month, $day, $year);
 
 		$this->_params = array(
@@ -57,9 +63,10 @@ class Calendar_Cell_Day extends \Calendar_Cell
 	}
 
 	/**
-	 * [is_holiday description]
-	 * @param  boolean $saturday_flag [description]
-	 * @return boolean                [description]
+	 * Return the boolean value of whether this day is a holiday or not.
+	 * 
+	 * @param  boolean $saturday_flag  If false given, then return FALSE when saturday.
+	 * @return boolean
 	 */
 	public function is_holiday($saturday_flag = true)
 	{

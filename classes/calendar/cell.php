@@ -14,38 +14,36 @@
 namespace Calendar;
 
 /**
- * 
+ * The abstract Calender_Cell class has free-data and read-only params.
+ * And this belongs to a Calendar instance.
+ * (default calendar name is "default")
  */
 abstract class Calendar_Cell
 {
 	/**
-	 * [$_calenadar_name description]
+	 * the calendar instance name
 	 * @var string
 	 */
 	protected $_calenadar_name = 'default';
 
 	/**
-	 * [$_params description]
+	 * an array of read-only params
 	 * @var array
 	 */
 	protected $_params = array(
-		'year'		=> null,
-		'month'		=> null,
-		'week'		=> null,
-		'day'		=> null,
-		'time'		=> null,
-		'holiday'	=> null,
+		'time' => null
 	);
 
 	/**
-	 * [$_data description]
-	 * @var [type]
+	 * free-data
+	 * @var mixed
 	 */
 	protected $_data;
 
 	/**
-	 * [set_calendar_name description]
-	 * @param [type] $name [description]
+	 * Set the calendar instance name
+	 * 
+	 * @param string $name
 	 */
 	public function set_calendar_name($name)
 	{
@@ -53,8 +51,9 @@ abstract class Calendar_Cell
 	}
 
 	/**
-	 * [get_calendar_name description]
-	 * @return [type] [description]
+	 * Return the calendar instance name
+	 * 
+	 * @return string
 	 */
 	public function get_calendar_name()
 	{
@@ -62,8 +61,9 @@ abstract class Calendar_Cell
 	}
 
 	/**
-	 * [get_calendar description]
-	 * @return [type] [description]
+	 * Return the calendar instance
+	 * 
+	 * @return Calendar
 	 */
 	public function get_calendar()
 	{
@@ -72,8 +72,9 @@ abstract class Calendar_Cell
 
 
 	/**
-	 * [get_data description]
-	 * @return [type] [description]
+	 * Return the free-data
+	 * 
+	 * @return mixed
 	 */
 	public function get_data()
 	{
@@ -81,8 +82,9 @@ abstract class Calendar_Cell
 	}
 
 	/**
-	 * [set_data description]
-	 * @param [type] $data [description]
+	 * Set the free-data
+	 * 
+	 * @param mixed
 	 */
 	public function set_data($data)
 	{
@@ -90,19 +92,23 @@ abstract class Calendar_Cell
 	}
 
 	/**
-	 * [format description]
-	 * @param  [type] $format [description]
-	 * @return [type]         [description]
+	 * Return the formatted date string
+	 * Format-string is same as date()
+	 * 
+	 * @param  string $format The format of the outputted date string
+	 * @return string Returns a formatted date string.
 	 */
 	public function format($format)
 	{
+		// Return the formatted string using "time" property
 		return date($format, $this->time);
 	}
 
 	/**
-	 * [__get description]
-	 * @param  [type] $property [description]
-	 * @return [type]           [description]
+	 * Return read-only params
+	 * 
+	 * @param  string $property property name
+	 * @return mixed
 	 */
 	public function __get($property)
 	{

@@ -14,21 +14,18 @@
 namespace Calendar;
 
 /**
- * 
+ * The Calendar_Cell_Year class is one of concrete class of Calendar_Cell.
+ * This object has only two read-only params. "year" and "time".
+ * This object can return Calendar_Cell_Month instance(s).
+ * And If you use as array by foreach, It splits Calendar_Cell_Day instances.
  */
-class Calendar_Cell_Year extends \Calendar_Cell implements \Iterator
+class Calendar_Cell_Year extends Calendar_Cell implements \Iterator
 {
 	/**
-	 * [$_offset description]
-	 * @var integer
-	 */
-	protected $_offset = 0;
-
-	/**
-	 * [forge description]
-	 * @param  [type] $year          [description]
-	 * @param  string $calendar_name [description]
-	 * @return [type]                [description]
+	 * Create Calendar_Cell_Year object.
+	 * 
+	 * @param  int $year
+	 * @return Calendar_Cell_Year
 	 */
 	public static function forge($year = null)
 	{
@@ -36,14 +33,21 @@ class Calendar_Cell_Year extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [__construct description]
-	 * @param [type] $year          [description]
-	 * @param string $calendar_name [description]
+	 * the offset for foreach
+	 * @var int
+	 */
+	protected $_offset = 0;
+
+	/**
+	 * Object constructor
+	 * 
+	 * @param int $year
 	 */
 	public function __construct($year = null)
 	{
 		is_null($year) and $year = (int) date('Y');
-		
+
+		// The "time" is {YEAR}/01/01 00:00:00.
 		$time = mktime(0, 0, 0, 1, 1, $year);
 
 		$this->_params = array(
@@ -53,9 +57,10 @@ class Calendar_Cell_Year extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [get_month description]
-	 * @param  [type] $month [description]
-	 * @return [type]        [description]
+	 * Return the specific Calendar_Cell_Month instance
+	 * 
+	 * @param  int $month
+	 * @return Calendar_Cell_Month
 	 */
 	public function get_month($month = null)
 	{
@@ -63,8 +68,9 @@ class Calendar_Cell_Year extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [get_months description]
-	 * @return [type] [description]
+	 * Return the array of all Calendar_Cell_Month instance of this year
+	 * 
+	 * @return array   an array contains Calendar_Cell_Month instances
 	 */
 	public function get_months()
 	{
@@ -79,8 +85,9 @@ class Calendar_Cell_Year extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [current description]
-	 * @return [type] [description]
+	 * Return the current Calendar_Cell_Day instance
+	 * 
+	 * @return Calendar_Cell_Day
 	 */
 	public function current()
 	{
@@ -88,8 +95,9 @@ class Calendar_Cell_Year extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [key description]
-	 * @return [type] [description]
+	 * Return the current offset
+	 * 
+	 * @return int
 	 */
 	public function key()
 	{
@@ -97,8 +105,7 @@ class Calendar_Cell_Year extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [next description]
-	 * @return function [description]
+	 * @return void
 	 */
 	public function next()
 	{
@@ -106,8 +113,7 @@ class Calendar_Cell_Year extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [rewind description]
-	 * @return [type] [description]
+	 * @return void
 	 */
 	public function rewind()
 	{
@@ -115,8 +121,8 @@ class Calendar_Cell_Year extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [valid description]
-	 * @return [type] [description]
+	 * Validate the current offset
+	 * @return boolean
 	 */
 	public function valid()
 	{

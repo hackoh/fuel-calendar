@@ -14,22 +14,19 @@
 namespace Calendar;
 
 /**
- * 
+ * The Calendar_Cell_Week class is one of concrete class of Calendar_Cell.
+ * This object has five read-only params. "year", "month", "week", "day" and "time".
+ * And If you use as array by foreach, It splits Calendar_Cell_Day instances.
  */
-class Calendar_Cell_Week extends \Calendar_Cell implements \Iterator
+class Calendar_Cell_Week extends Calendar_Cell implements \Iterator
 {
 	/**
-	 * [$_offset description]
-	 * @var integer
-	 */
-	protected $_offset = 0;
-
-	/**
-	 * [forge description]
-	 * @param  [type] $week  [description]
-	 * @param  [type] $month [description]
-	 * @param  [type] $year  [description]
-	 * @return [type]        [description]
+	 * Create Calendar_Cell_Week object.
+	 * 
+	 * @param  int $week 
+	 * @param  int $month
+	 * @param  int $year
+	 * @return Calendar_Cell_Week
 	 */
 	public static function forge($week = null, $month = null, $year = null)
 	{
@@ -37,10 +34,17 @@ class Calendar_Cell_Week extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [__construct description]
-	 * @param [type] $week  [description]
-	 * @param [type] $month [description]
-	 * @param [type] $year  [description]
+	 * the offset for foreach
+	 * @var int
+	 */
+	protected $_offset = 0;
+
+	/**
+	 * Object constructor
+	 * 
+	 * @param  int $week 
+	 * @param  int $month
+	 * @param  int $year
 	 */
 	public function __construct($week = null, $month = null, $year = null)
 	{
@@ -73,7 +77,8 @@ class Calendar_Cell_Week extends \Calendar_Cell implements \Iterator
 			$day -= 1;
 		}
 		
-
+		// The "time" is {YEAR}/{MONTH}/{DAY} 00:00:00.
+		// It does not necessarily become this month.
 		$time = mktime(0, 0, 0, $month, $day, $year);
 
 		$this->_params = array(
@@ -86,9 +91,10 @@ class Calendar_Cell_Week extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [get_day description]
-	 * @param  [type] $wday [description]
-	 * @return [type]       [description]
+	 * Return the specific Calendar_Cell_Day instance
+	 * 
+	 * @param  int $wday   the week day. 0 is sunday and 6 is saturday.
+	 * @return Calendar_Cell_Day
 	 */
 	public function get_day($wday)
 	{
@@ -96,8 +102,9 @@ class Calendar_Cell_Week extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [current description]
-	 * @return [type] [description]
+	 * Return the current Calendar_Cell_Day instance
+	 * 
+	 * @return Calendar_Cell_Day
 	 */
 	public function current()
 	{
@@ -105,8 +112,9 @@ class Calendar_Cell_Week extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [key description]
-	 * @return [type] [description]
+	 * Return the current offset
+	 *  
+	 * @return int
 	 */
 	public function key()
 	{
@@ -114,8 +122,7 @@ class Calendar_Cell_Week extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [next description]
-	 * @return function [description]
+	 * @return void
 	 */
 	public function next()
 	{
@@ -123,8 +130,7 @@ class Calendar_Cell_Week extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [rewind description]
-	 * @return [type] [description]
+	 * @return void
 	 */
 	public function rewind()
 	{
@@ -132,8 +138,8 @@ class Calendar_Cell_Week extends \Calendar_Cell implements \Iterator
 	}
 
 	/**
-	 * [valid description]
-	 * @return [type] [description]
+	 * Validate the current offset
+	 * @return boolean
 	 */
 	public function valid()
 	{
