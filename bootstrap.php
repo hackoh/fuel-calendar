@@ -19,4 +19,7 @@ Autoloader::add_classes(array(
 	'Calendar\\Calendar_Cell_Month'	=> __DIR__.'/classes/calendar/cell/month.php',
 	'Calendar\\Calendar_Cell_Week'	=> __DIR__.'/classes/calendar/cell/week.php',
 	'Calendar\\Calendar_Cell_Day'	=> __DIR__.'/classes/calendar/cell/day.php',
+	'Calendar\\Controller_Calendar'	=> __DIR__.'/classes/controller/calendar.php',
 ));
+
+Config::load(dirname(__FILE__).DS.'config/config.php');

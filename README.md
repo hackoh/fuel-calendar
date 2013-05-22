@@ -3,15 +3,37 @@ Calendar
 
 Calendar package for FuelPHP
 
+Overview
+------
+This package allows you to easily build calendars.
+It allows you to set specify holidays.
+It allows you to set specify free-data into cell instances.
+
+You can configure the holidays by copying the PKGPATH/calendar/config/calendar.php
+config file into your app/config folder and changing the settings.
+
+**CAUTION**
+This package supports only "Gregorian calendar".
 
 Usage
 ------
 
+## via HMVC
+
+This package bundles Controller_Calendar class.
+That means you can access calendar view via HMVC.
+And you can override package's view file by your app view file.
+(ex. APPPATH/views/calendar/year.php)
+
+```html
+<h1>2015/05 's calendar!</h1>
+<?php echo Request::forge('calendar/month/2013/5')->execute() ?>
+```
+
+
 ## Simple calendar.
 
 ```php
-
-Package::load('calendar');
 
 $years = array();
 
@@ -45,7 +67,6 @@ echo View::forge('test/cal', array('years' => $years), false);
 ## Setting data.
 
 ```php
-Package::load('Calendar');
 
 $people = array('hackoh', 'foo', 'bar');
 foreach ($people as $person)
