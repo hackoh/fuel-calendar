@@ -12,8 +12,8 @@ It allows you to set specify free-data into cell instances.
 You can configure the holidays by copying the PKGPATH/calendar/config/calendar.php
 config file into your app/config folder and changing the settings.
 
-**CAUTION**
-This package supports only "Gregorian calendar".
+> **CAUTION**
+> This package supports only "Gregorian calendar".
 
 Usage
 ------
