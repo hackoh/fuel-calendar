@@ -1,7 +1,21 @@
 <?php
+/**
+ * Calendar
+ *
+ * The Package of calendar.
+ *
+ * @package    Calendar
+ * @version    1.0
+ * @author     hackoh
+ * @license    MIT License
+ * @link       http://github.com/hackoh
+ */
 
 namespace Calendar;
 
+/**
+ * The Controller_Calendar class allows you to easily render calendars.
+ */
 class Controller_Calendar extends \Controller
 {
 	public function before()
