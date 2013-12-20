@@ -103,4 +103,19 @@ class Test_Calendar_Cell_Day extends TestCase
 
 		$this->assertEquals($expected, $day->holiday);
 	}
+
+	public function test_is_today()
+	{
+		$this_year = date('Y');
+		$this_month = date('n');
+		$this_day = date('j');
+
+		$day = \Calendar_Cell_Day::forge($this_day, $this_month, $this_year);
+		$expected = true;
+		$this->assertEquals($expected, $day->is_today());
+
+		$day = \Calendar_Cell_Day::forge($this_day - 1, $this_month - 1, $this_year - 1);
+		$expected = false;
+		$this->assertEquals($expected, $day->is_today());
+	}
 }
