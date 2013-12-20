@@ -40,6 +40,7 @@ class Calendar_Cell_Day extends \Calendar_Cell
 			'day'		=> (int) date('j', $time),
 			'time'		=> $time,
 			'holiday'	=> $this->get_calendar()->get_config('holidays.'.implode('.', array($year, $month, $day))),
+			'today'		=> (int) date('j', time()),
 		);
 	}
 
@@ -56,5 +57,10 @@ class Calendar_Cell_Day extends \Calendar_Cell
 		}
 
 		return false;
+	}
+
+	public function is_today()
+	{
+		return $this->day === $this->today ? true : false;
 	}
 }
