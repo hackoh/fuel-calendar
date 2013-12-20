@@ -82,4 +82,9 @@ class Calendar_Cell_Day extends Calendar_Cell
 
 		return false;
 	}
+
+	public function is_today()
+	{
+		return $this->day === (int) date('j') ? true : false;
+	}
 }

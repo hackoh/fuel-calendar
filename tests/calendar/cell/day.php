@@ -103,4 +103,15 @@ class Test_Calendar_Cell_Day extends TestCase
 
 		$this->assertEquals($expected, $day->holiday);
 	}
+
+	public function test_is_today()
+	{	
+		$day = \Calendar_Cell_Day::forge(20, 12, 2013);
+		$expected = true;
+		$this->assertEquals($expected, $day->is_today());
+
+		$day = \Calendar_Cell_Day::forge(19, 12, 2013);
+		$expected = false;
+		$this->assertEquals($expected, $day->is_today());
+	}
 }
