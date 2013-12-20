@@ -89,19 +89,7 @@ class Calendar_Cell_Day extends Calendar_Cell
 	 * @return boolean
 	 */
 	public function is_today()
-	{	
-		switch (true)
-		{
-			case $this->year !== (int) date('Y'):
-				return false;
-			case $this->month !== (int) date('m'):
-				return false;
-			case $this->day !== (int) date('j'):
-				return false;
-			default:
-				return true;
-		}
-
-		return false;
+	{
+		return $this->year === (int) date('Y') && $this->month === (int) date('n') && $this->day === (int) date('j');
 	}
 }

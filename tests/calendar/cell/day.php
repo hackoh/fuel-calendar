@@ -107,7 +107,7 @@ class Test_Calendar_Cell_Day extends TestCase
 	public function test_is_today()
 	{
 		$this_year = date('Y');
-		$this_month = date('m');
+		$this_month = date('n');
 		$this_day = date('j');
 
 		$day = \Calendar_Cell_Day::forge($this_day, $this_month, $this_year);
