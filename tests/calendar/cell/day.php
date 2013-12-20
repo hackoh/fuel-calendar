@@ -105,12 +105,16 @@ class Test_Calendar_Cell_Day extends TestCase
 	}
 
 	public function test_is_today()
-	{	
-		$day = \Calendar_Cell_Day::forge(20, 12, 2013);
+	{
+		$this_year = date('Y');
+		$this_month = date('m');
+		$this_day = date('j');
+
+		$day = \Calendar_Cell_Day::forge($this_day, $this_month, $this_year);
 		$expected = true;
 		$this->assertEquals($expected, $day->is_today());
 
-		$day = \Calendar_Cell_Day::forge(19, 12, 2013);
+		$day = \Calendar_Cell_Day::forge($this_day - 1, $this_month - 1, $this_year - 1);
 		$expected = false;
 		$this->assertEquals($expected, $day->is_today());
 	}

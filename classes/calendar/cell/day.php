@@ -83,8 +83,25 @@ class Calendar_Cell_Day extends Calendar_Cell
 		return false;
 	}
 
+	/**
+	 * Return the boolean value of whether this day is a today or not.
+	 * 
+	 * @return boolean
+	 */
 	public function is_today()
-	{
-		return $this->day === (int) date('j') ? true : false;
+	{	
+		switch (true)
+		{
+			case $this->year !== (int) date('Y'):
+				return false;
+			case $this->month !== (int) date('m'):
+				return false;
+			case $this->day !== (int) date('j'):
+				return false;
+			default:
+				return true;
+		}
+
+		return false;
 	}
 }
