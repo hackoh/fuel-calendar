@@ -88,7 +88,7 @@ class Test_Calendar_Cell_Week extends TestCase
 			$this->assertEquals(true, $day instanceof \Calendar_Cell_Day);
 		}
 
-		$expected = 7;
+		$expected = $week->get_calendar()->get_config('valid') + 1;
 		$this->assertEquals($expected, $count);
 	}
 }

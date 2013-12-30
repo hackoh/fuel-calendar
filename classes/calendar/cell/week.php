@@ -134,7 +134,7 @@ class Calendar_Cell_Week extends Calendar_Cell implements \Iterator
 	 */
 	public function rewind()
 	{
-		$this->_offset = 0;
+		$this->_offset = $this->get_calendar()->get_config('rewind');
 	}
 
 	/**
@@ -143,6 +143,6 @@ class Calendar_Cell_Week extends Calendar_Cell implements \Iterator
 	 */
 	public function valid()
 	{
-		return $this->_offset <= 6;
+		return $this->_offset <= $this->get_calendar()->get_config('valid');
 	}
 }

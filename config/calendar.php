@@ -21,4 +21,6 @@ return array(
 		)
 		*/
 	),
+	'rewind' => 0,
+	'valid' => 6,
 );
