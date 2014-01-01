@@ -21,6 +21,5 @@ return array(
 		)
 		*/
 	),
-	'rewind' => 0,
-	'valid' => 6,
+	'start_of_the_week' => 0,
 );

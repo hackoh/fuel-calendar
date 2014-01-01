@@ -108,7 +108,7 @@ class Calendar_Cell_Week extends Calendar_Cell implements \Iterator
 	 */
 	public function current()
 	{
-		return $this->get_calendar()->get_day($this->day + $this->_offset, $this->month, $this->year);
+		return $this->get_calendar()->get_day($this->day + (int) $this->_offset, $this->month, $this->year);
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Calendar_Cell_Week extends Calendar_Cell implements \Iterator
 	 */
 	public function key()
 	{
-		return $this->_offset;
+		return (int) $this->_offset;
 	}
 
 	/**
@@ -134,7 +134,7 @@ class Calendar_Cell_Week extends Calendar_Cell implements \Iterator
 	 */
 	public function rewind()
 	{
-		$this->_offset = $this->get_calendar()->get_config('rewind');
+		$this->_offset = (string) $this->get_calendar()->get_config('start_of_the_week');
 	}
 
 	/**
@@ -143,6 +143,10 @@ class Calendar_Cell_Week extends Calendar_Cell implements \Iterator
 	 */
 	public function valid()
 	{
-		return $this->_offset <= $this->get_calendar()->get_config('valid');
+		$end = $this->get_calendar()->get_config('start_of_the_week');
+
+		$this->_offset <= 6 || $this->_offset = 0;
+
+		return is_string($this->_offset) || $end !== $this->_offset;
 	}
 }
