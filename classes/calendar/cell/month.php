@@ -73,6 +73,12 @@ class Calendar_Cell_Month extends Calendar_Cell implements \Iterator
 			if ( ! in_array($week, $weeks)) $weeks[] = $week;
 		}
 
+		$day--;
+		if ((int) date('w', mktime(0, 0, 0, $this->month, $day, $this->year)) === 0)
+		{
+			$weeks[] = $week + 1;
+		}
+
 		foreach ($weeks as $index => $week)
 		{
 			$weeks[$index] = $this->get_calendar()->get_week($week, $this->month, $this->year);
