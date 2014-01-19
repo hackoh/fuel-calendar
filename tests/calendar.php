@@ -269,4 +269,33 @@ class Test_Calendar extends TestCase
 
 		$this->assertEquals($expected, \Arr::get($holidays, '2013.5.9'));
 	}
+
+	public function test_month_start_or_end_is_sunday()
+	{
+		$calendar = \Calendar::month(6, 2014);
+		$day_count = 0;
+		foreach ($calendar->get_weeks() as $week)
+		{
+			foreach ($week as $day)
+			{
+				$day_count++;
+			}
+		}
+
+		$expected = 35;
+		$this->assertEquals($expected, $day_count);
+
+		$calendar = \Calendar::month(8, 2014);
+		$day_count = 0;
+		foreach ($calendar->get_weeks() as $week)
+		{
+			foreach ($week as $day)
+			{
+				$day_count++;
+			}
+		}
+
+		$expected = 42;
+		$this->assertEquals($expected, $day_count);
+	}
 }
