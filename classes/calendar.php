@@ -330,6 +330,10 @@ class Calendar
 			$this->_weeks[$time] = $w;
 			$this->_weeks[$time]->set_calendar_name($this->_name);
 		}
+		elseif ($w->week == 2 and $w->day == 1)
+		{
+			$this->_weeks[$time] = array();
+		}
 		return $this->_weeks[$time];
 	}
 
