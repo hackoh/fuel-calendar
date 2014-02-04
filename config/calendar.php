@@ -21,4 +21,5 @@ return array(
 		)
 		*/
 	),
+	'start_of_the_week' => 0,
 );

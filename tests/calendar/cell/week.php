@@ -91,4 +91,36 @@ class Test_Calendar_Cell_Week extends TestCase
 		$expected = 7;
 		$this->assertEquals($expected, $count);
 	}
+
+	public function test_start_of_the_week()
+	{
+		$week = \Calendar_Cell_Week::forge(1, 5, 2013);
+
+		$week->get_calendar()->set_config('start_of_the_week', 0);
+
+		$days = array();
+		foreach ($week as $day)
+		{
+			$days[] = $day;
+		}
+
+		$expected = 28;
+
+		$this->assertEquals($expected, $days[0]->day);
+
+		$week = \Calendar_Cell_Week::forge(1, 5, 2013);
+
+		$week->get_calendar()->set_config('start_of_the_week', 1);
+
+		$days = array();
+		foreach ($week as $day)
+		{
+			$days[] = $day;
+		}
+
+		$expected = 29;
+
+		$this->assertEquals($expected, $days[0]->day);
+
+	}
 }
